@@ -58,6 +58,7 @@ void assert_failed(uint8_t *file, uint32_t line);
 
 #define PWR_BASEADDR			(APB1PERIPH_BASEADDR + 0x7000)
 
+/********************* CORTEX-M4 ************************/
 /* NVIC */
 #define NVIC_ISER0				(*((volatile uint32_t *)0xE000E100UL))
 #define NVIC_ISER1				(*((volatile uint32_t *)0xE000E104UL))
@@ -68,6 +69,20 @@ void assert_failed(uint8_t *file, uint32_t line);
 #define NVIC_ICER2				(*((volatile uint32_t *)0xE000E188UL))
 
 #define NVIC_IPR_BASEADDR		0xE000E400UL
+
+
+/* SYSTICK */
+#define SYSTICK_BASEADDR		0xE000E010UL
+
+typedef struct {
+	volatile uint32_t CSR;
+	volatile uint32_t RVR;
+	volatile uint32_t CVR;
+	volatile uint32_t CALIB;
+}Systick_RegDef_t;
+
+#define SYSTICK			((Systick_RegDef_t *)SYSTICK_BASEADDR)
+/********************************************************/
 
 /* Estructuras de periféricos */
 typedef struct {
@@ -446,6 +461,15 @@ typedef struct
 #define TIM_CR2_CCDS             3
 #define TIM_CR2_MMS              4
 #define TIM_CR2_TI1S             7
+
+#define SYSTICK_CSR_ENABLE		 0
+#define SYSTICK_CSR_TICKINT		 1
+#define SYSTICK_CSR_CLKSOURCE	 2
+#define SYSTICK_CSR_COUNTFLAG	16
+
+#define SYSTICK_CALIB_TENMS		 0
+#define SYSTICK_CALIB_SKEW		30
+#define SYSTICK_CALIB_NOREF		31
 
 /* Mascara de bits */
 #define TIM_IT_UI				((uint16_t)0x0001)
