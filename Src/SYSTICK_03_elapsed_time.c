@@ -12,7 +12,7 @@
 
 GPIO_handle_t LED;
 uint32_t systick_delay;
-uint32_t system_ticks;
+uint16_t system_ticks;  // NOTA: Cambiado a uint16_t para probar el overflow, en realidad debe ser uint32_t
 uint8_t button_pressed_f;
 
 void SYSCLK_PLL_setup(void);
@@ -62,9 +62,9 @@ void SYSTICK_setup(void)
 
 int main(void)
 {
-	uint32_t last_ticks = 0;
-	uint32_t current_ticks;
-	uint32_t elapsed_ticks;
+	uint16_t last_ticks = 0;			// NOTA: Cambiado a uint16_t para probar el overflow, en realidad debe ser uint32_t
+	uint16_t current_ticks;				// NOTA: Cambiado a uint16_t para probar el overflow, en realidad debe ser uint32_t
+	uint16_t elapsed_ticks;				// NOTA: Cambiado a uint16_t para probar el overflow, en realidad debe ser uint32_t
 	uint8_t system_ticks_overflow;
 	uint8_t msg[64];
 
@@ -91,9 +91,10 @@ int main(void)
 				elapsed_ticks = current_ticks - last_ticks;
 			}else{
 				system_ticks_overflow = 1;
-				elapsed_ticks = (0xffffffff - last_ticks - 1) + current_ticks;
+				elapsed_ticks = (0xffff - last_ticks + 1) + current_ticks;   	 	// Cuando se usen variables uint16_t
+				//elapsed_ticks = (0xffffffff - last_ticks + 1) + current_ticks;	// Cuando se usen variables uint32_t
 			}
-			snprintf((char *)msg, sizeof(msg),"ET: %ld [ms] (overflow: %d)\r\n", elapsed_ticks, system_ticks_overflow);
+			snprintf((char *)msg, sizeof(msg),"ET: %d [ms] (current: %d last:%d overflow: %d)\r\n", elapsed_ticks, current_ticks, last_ticks, system_ticks_overflow);
 			USART2_SendData(msg, strlen((char *)msg));
 
 			last_ticks = current_ticks;
