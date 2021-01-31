@@ -9,7 +9,6 @@
 
 #include "usart2.h"
 
-
 GPIO_handle_t LED;
 uint32_t systick_delay;
 uint16_t system_ticks;  // NOTA: Cambiado a uint16_t para probar el overflow, en realidad debe ser uint32_t
