@@ -49,7 +49,6 @@ void SYSTICK_setup(void)
 int main(void)
 {
 	SYSCLK_PLL_setup();
-
 	GPIO_setup();
 	SYSTICK_setup();
 
@@ -62,6 +61,7 @@ int main(void)
 	}
 }
 
+
 void SYSCLK_PLL_setup(void)
 {
 	uint32_t PLLM, PLLN, PLLP, PLLQ, PLLR;
@@ -69,8 +69,8 @@ void SYSCLK_PLL_setup(void)
 	PLLM = 4;
 	PLLN = 150;
 	PLLP = 2;
-	PLLR = 5;
-	PLLQ = 4;
+	PLLR = 2;
+	PLLQ = 8;
 
 	// Configurar prescaler APB1 y APB2
 	RCC_APB1CLKConfig(RCC_APB_Prescaler_4); // 37.5MHz

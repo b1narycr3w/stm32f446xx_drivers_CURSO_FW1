@@ -7,12 +7,12 @@
 #include "stm32f446xx_rcc.h"
 #include "stm32f446xx_systick.h"
 
+
 void SYSCLK_PLL_setup(void);
 
-void delay(uint32_t cnt)
+void SysTick_Handler(void)
 {
-	while(cnt)
-		cnt--;
+	GPIO_TogglePin(GPIOC, GPIO_PIN_10);
 }
 
 void GPIO_setup(void)
@@ -40,7 +40,6 @@ void SYSTICK_setup(void)
 int main(void)
 {
 	SYSCLK_PLL_setup();
-
 	GPIO_setup();
 	SYSTICK_setup();
 
@@ -49,13 +48,7 @@ int main(void)
 
 	while(1){
 
-		delay(50000);
 	}
-}
-
-void SysTick_Handler(void)
-{
-	GPIO_TogglePin(GPIOC, GPIO_PIN_10);
 }
 
 
@@ -66,8 +59,8 @@ void SYSCLK_PLL_setup(void)
 	PLLM = 4;
 	PLLN = 150;
 	PLLP = 2;
-	PLLR = 5;
-	PLLQ = 4;
+	PLLR = 2;
+	PLLQ = 8;
 
 	// Configurar prescaler APB1 y APB2
 	RCC_APB1CLKConfig(RCC_APB_Prescaler_4); // 37.5MHz

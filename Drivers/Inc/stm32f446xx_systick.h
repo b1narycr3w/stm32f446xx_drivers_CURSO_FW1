@@ -4,7 +4,6 @@
 
 #include "stm32f446xx.h"
 
-
 /*
  * @SYSTICK_Clk_Source
  */
@@ -16,7 +15,6 @@ typedef enum{
 typedef struct{
 	uint32_t SYSTICK_Period;
 	SYSTICK_Clk_Source_t SYSTICK_Clock_Source;
-
 }SYSTICK_Config_t;
 
 void SYSTICK_Init(SYSTICK_Config_t *SYSTICK_config);

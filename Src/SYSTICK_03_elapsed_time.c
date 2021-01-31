@@ -9,7 +9,7 @@
 
 #include "usart2.h"
 
-#define SYSTICK_MAX_COUNT	16777215  // 2^24 - 1
+
 GPIO_handle_t LED;
 uint32_t systick_delay;
 uint32_t system_ticks;
@@ -23,19 +23,19 @@ void delay_ms(uint32_t ms)
 	while(systick_delay);
 }
 
+void EXTI15_10_IRQHandler(void)
+{
+	GPIO_IRQHandler(GPIO_PIN_13);
+
+	button_pressed_f = 1;
+}
+
 void SysTick_Handler(void)
 {
 	if(systick_delay > 0)
 		systick_delay--;
 
 	system_ticks++;
-}
-
-void EXTI15_10_IRQHandler(void)
-{
-	GPIO_IRQHandler(GPIO_PIN_13);
-
-	button_pressed_f = 1;
 }
 
 void GPIO_setup(void)
@@ -65,11 +65,10 @@ int main(void)
 	uint32_t last_ticks = 0;
 	uint32_t current_ticks;
 	uint32_t elapsed_ticks;
-	uint8_t systick_overflow;
+	uint8_t system_ticks_overflow;
 	uint8_t msg[64];
 
 	SYSCLK_PLL_setup();
-
 	GPIO_setup();
 	SYSTICK_setup();
 
@@ -88,13 +87,13 @@ int main(void)
 			button_pressed_f = 0;
 
 			if(current_ticks >= last_ticks){
-				systick_overflow = 0;
+				system_ticks_overflow = 0;
 				elapsed_ticks = current_ticks - last_ticks;
 			}else{
-				systick_overflow = 1;
-				elapsed_ticks = (SYSTICK_MAX_COUNT - last_ticks + 1) + current_ticks;
+				system_ticks_overflow = 1;
+				elapsed_ticks = (0xffffffff - last_ticks - 1) + current_ticks;
 			}
-			snprintf((char *)msg, sizeof(msg),"ET: %ld [ms] (overflow: %d)\r\n", elapsed_ticks, systick_overflow);
+			snprintf((char *)msg, sizeof(msg),"ET: %ld [ms] (overflow: %d)\r\n", elapsed_ticks, system_ticks_overflow);
 			USART2_SendData(msg, strlen((char *)msg));
 
 			last_ticks = current_ticks;
@@ -110,8 +109,8 @@ void SYSCLK_PLL_setup(void)
 	PLLM = 4;
 	PLLN = 150;
 	PLLP = 2;
-	PLLR = 5;
-	PLLQ = 4;
+	PLLR = 2;
+	PLLQ = 8;
 
 	// Configurar prescaler APB1 y APB2
 	RCC_APB1CLKConfig(RCC_APB_Prescaler_4); // 37.5MHz
