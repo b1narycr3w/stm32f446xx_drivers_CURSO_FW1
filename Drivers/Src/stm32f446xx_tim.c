@@ -69,6 +69,38 @@ void TIM_ClkCtrl(TIM_RegDef_t *pTIMx, uint8_t status)
 	}
 }
 
+void TIM_DeInit(TIM_RegDef_t *pTIMx)
+{
+	if(pTIMx == TIM1)
+		TIM1_RESET();
+	else if(pTIMx == TIM2)
+		TIM2_RESET();
+	else if(pTIMx == TIM3)
+		TIM3_RESET();
+	else if(pTIMx == TIM4)
+		TIM4_RESET();
+	else if(pTIMx == TIM5)
+		TIM5_RESET();
+	else if(pTIMx == TIM6)
+		TIM6_RESET();
+	else if(pTIMx == TIM7)
+		TIM7_RESET();
+	else if(pTIMx == TIM8)
+		TIM8_RESET();
+	else if(pTIMx == TIM9)
+		TIM9_RESET();
+	else if(pTIMx == TIM10)
+		TIM10_RESET();
+	else if(pTIMx == TIM11)
+		TIM11_RESET();
+	else if(pTIMx == TIM12)
+		TIM12_RESET();
+	else if(pTIMx == TIM13)
+		TIM13_RESET();
+	else if(pTIMx == TIM14)
+		TIM14_RESET();
+}
+
 uint8_t TIM_GetITStatus(TIM_RegDef_t *pTIMx, uint16_t TIM_IT)
 {
 	uint16_t IT_status = 0x0, IT_enable = 0x0;

@@ -299,6 +299,21 @@ typedef struct
 #define GPIOG_RESET()		do{ RCC->AHB1RSTR |= (1 << 6); RCC->AHB1RSTR &= ~(1 << 6);}while(0)
 #define GPIOH_RESET()		do{ RCC->AHB1RSTR |= (1 << 7); RCC->AHB1RSTR &= ~(1 << 7);}while(0)
 
+#define TIM1_RESET()		do{ RCC->APB2RSTR |= (1 << 0); RCC->APB2RSTR &= ~(1 << 0);}while(0)
+#define TIM8_RESET()		do{ RCC->APB2RSTR |= (1 << 1); RCC->APB2RSTR &= ~(1 << 1);}while(0)
+#define TIM9_RESET()		do{ RCC->APB2RSTR |= (1 << 16); RCC->APB2RSTR &= ~(1 << 16);}while(0)
+#define TIM10_RESET()		do{ RCC->APB2RSTR |= (1 << 17); RCC->APB2RSTR &= ~(1 << 17);}while(0)
+#define TIM11_RESET()		do{ RCC->APB2RSTR |= (1 << 18); RCC->APB2RSTR &= ~(1 << 18);}while(0)
+
+#define TIM2_RESET()		do{ RCC->APB1RSTR |= (1 << 0); RCC->APB1RSTR &= ~(1 << 0);}while(0)
+#define TIM3_RESET()		do{ RCC->APB1RSTR |= (1 << 1); RCC->APB1RSTR &= ~(1 << 1);}while(0)
+#define TIM4_RESET()		do{ RCC->APB1RSTR |= (1 << 2); RCC->APB1RSTR &= ~(1 << 2);}while(0)
+#define TIM5_RESET()		do{ RCC->APB1RSTR |= (1 << 3); RCC->APB1RSTR &= ~(1 << 3);}while(0)
+#define TIM6_RESET()		do{ RCC->APB1RSTR |= (1 << 4); RCC->APB1RSTR &= ~(1 << 4);}while(0)
+#define TIM7_RESET()		do{ RCC->APB1RSTR |= (1 << 5); RCC->APB1RSTR &= ~(1 << 5);}while(0)
+#define TIM12_RESET()		do{ RCC->APB1RSTR |= (1 << 6); RCC->APB1RSTR &= ~(1 << 6);}while(0)
+#define TIM13_RESET()		do{ RCC->APB1RSTR |= (1 << 7); RCC->APB1RSTR &= ~(1 << 7);}while(0)
+#define TIM14_RESET()		do{ RCC->APB1RSTR |= (1 << 8); RCC->APB1RSTR &= ~(1 << 8);}while(0)
 
 /* Macro para obtener el numero de puerto */
 #define PORT_NUMBER(x)		((x == GPIOA) ? 0 : \
