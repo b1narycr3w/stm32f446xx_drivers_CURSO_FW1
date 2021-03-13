@@ -58,6 +58,10 @@ void assert_failed(uint8_t *file, uint32_t line);
 
 #define PWR_BASEADDR			(APB1PERIPH_BASEADDR + 0x7000)
 
+#define IWDG_BASEADDR			(APB1PERIPH_BASEADDR + 0x3000)
+
+#define WWDG_BASEADDR			(APB1PERIPH_BASEADDR + 0x2C00)
+
 /********************* CORTEX-M4 ************************/
 /* NVIC */
 #define NVIC_ISER0				(*((volatile uint32_t *)0xE000E100UL))
@@ -193,6 +197,19 @@ typedef struct
   volatile uint32_t OR;          /*!< TIM option register,                 Address offset: 0x50 */
 }TIM_RegDef_t;
 
+typedef struct {
+	volatile uint32_t KR;
+	volatile uint32_t PR;
+	volatile uint32_t RLR;
+	volatile uint32_t SR;
+}IWDG_RegDef_t;
+
+typedef struct {
+	volatile uint32_t CR;
+	volatile uint32_t CFR;
+	volatile uint32_t SR;
+}WWDG_RegDef_t;
+
 /* Definición de periféricos */
 
 #define GPIOA		((GPIO_RegDef_t *)GPIOA_BASEADDR)
@@ -226,6 +243,11 @@ typedef struct
 #define TIM13		((TIM_RegDef_t *)TIM13_BASEADDR)
 #define TIM14		((TIM_RegDef_t *)TIM14_BASEADDR)
 
+#define IWDG		((IWDG_RegDef_t *)IWDG_BASEADDR)
+
+#define WWDG		((WWDG_RegDef_t *)WWDG_BASEADDR)
+
+
 /* Habilitar clock de perifericos */
 
 #define GPIOA_EN_CLK()		(RCC->AHB1ENR |= (1 << 0))
@@ -256,6 +278,8 @@ typedef struct
 #define TIM12_EN_CLK()		(RCC->APB1ENR |= (1 << 6))
 #define TIM13_EN_CLK()		(RCC->APB1ENR |= (1 << 7))
 #define TIM14_EN_CLK()		(RCC->APB1ENR |= (1 << 8))
+
+#define WWDG_EN_CLK()		(RCC->APB1ENR |= (1 << 11))
 
 /* Deshabilitar clock de perifericos */
 
@@ -288,6 +312,8 @@ typedef struct
 #define TIM13_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 7))
 #define TIM14_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 8))
 
+#define WWDG_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 11))
+
 /* Reset de periferico */
 
 #define GPIOA_RESET()		do{ RCC->AHB1RSTR |= (1 << 0); RCC->AHB1RSTR &= ~(1 << 0);}while(0)
@@ -314,6 +340,8 @@ typedef struct
 #define TIM12_RESET()		do{ RCC->APB1RSTR |= (1 << 6); RCC->APB1RSTR &= ~(1 << 6);}while(0)
 #define TIM13_RESET()		do{ RCC->APB1RSTR |= (1 << 7); RCC->APB1RSTR &= ~(1 << 7);}while(0)
 #define TIM14_RESET()		do{ RCC->APB1RSTR |= (1 << 8); RCC->APB1RSTR &= ~(1 << 8);}while(0)
+
+#define WWDG_RESET()		do{ RCC->APB1RSTR |= (1 << 11); RCC->APB1RSTR &= ~(1 << 11);}while(0)
 
 /* Macro para obtener el numero de puerto */
 #define PORT_NUMBER(x)		((x == GPIOA) ? 0 : \
@@ -376,6 +404,8 @@ typedef struct
 
 #define RCC_CSR_LSION			 0
 #define RCC_CSR_LSIRDY			 1
+#define RCC_CSR_IWDGRSTF		29
+#define RCC_CSR_WWDGRSTF		30
 
 #define PWR_CR_DBP				 8
 
@@ -485,6 +515,15 @@ typedef struct
 #define SYSTICK_CALIB_TENMS		 0
 #define SYSTICK_CALIB_SKEW		30
 #define SYSTICK_CALIB_NOREF		31
+
+#define WWDG_CR_T				 0
+#define WWDG_CR_WDGA			 7
+
+#define WWDG_CFR_W				 0
+#define WWDG_CFR_WDGTB			 7
+#define WWDG_CFR_EWI			 9
+
+#define WWDG_SR_EWIF			 0
 
 /* Mascara de bits */
 #define TIM_IT_UI				((uint16_t)0x0001)
