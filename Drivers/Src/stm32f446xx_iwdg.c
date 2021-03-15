@@ -47,7 +47,7 @@ void IWDG_SetPrescaler(IWDG_Prescaler_t prescaler)
 
 void IWDG_SetPeriod(uint32_t period)
 {
-	IWDG->RLR = (period & 0x7F);
+	IWDG->RLR = (period & 0xFFF);
 }
 
 uint8_t IWDG_GetFlag(IWDG_StatusFlag_t flag)

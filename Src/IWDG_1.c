@@ -73,7 +73,7 @@ int main(void)
 	SYSTICK_ITConfig(ENABLE);
 	SYSTICK_Cmd(ENABLE);
 
-	*((volatile uint32_t *)0xE0042008UL) |= (1 << 12);
+	*((volatile uint32_t *)0xE0042008) |= (1 << 12);
 	IWDG_setup();
 	delay_ms(200);
 	GPIO_WritePin(LED.pGPIOx, LED.GPIO_config.GPIO_Pin, SET);

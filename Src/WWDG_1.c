@@ -14,9 +14,9 @@ uint32_t systick_delay;
 
 WWDG_Config_t WWDG_Config;
 
-void generate_fault(void);
 void SYSCLK_PLL_setup(void);
 void min11max25(uint8_t val);
+void generate_fault(void);
 
 void delay_ms(uint32_t ms)
 {
@@ -62,10 +62,9 @@ void SYSTICK_setup(void)
 
 void WWDG_setup(void)
 {
-
 	WWDG_Config.WWDG_Prescaler = WWDG_Prescaler_4096x4;
-	WWDG_Config.WWDG_Window = 97;	 // Tmin: 10.48ms (1/37.5MHz)x4096x4x(valor_contaje - valor_ventana)
-	WWDG_Config.WWDG_Counter = 121;  //Tmax: 25.34ms (1/37.5MHz)x4096x4x(valor_contaje - 0x40 + 1)
+	WWDG_Config.WWDG_Window = 97;		// Tmin: 10.48ms (1/37.5MHz)x4096x4x(valor_contaje - valor_ventana)
+	WWDG_Config.WWDG_Counter = 121;		//Tmax: 25.34ms (1/37.5MHz)x4096x4x(valor_contaje - 0x40 + 1)
 
 	WWDG_Init(&WWDG_Config);
 }
@@ -74,7 +73,6 @@ int main(void)
 {
 	SYSCLK_PLL_setup();
 	GPIO_setup();
-
 	SYSTICK_setup();
 	SYSTICK_ITConfig(ENABLE);
 	SYSTICK_Cmd(ENABLE);
@@ -82,7 +80,8 @@ int main(void)
 	delay_ms(300);
 	GPIO_WritePin(LED.pGPIOx, LED.GPIO_config.GPIO_Pin, SET);
 
-	//*((volatile uint32_t *)0xE0042008UL) |= (1 << 11);
+	*((volatile uint32_t *)0xE0042008UL) |= (1 << 11);
+
 	WWDG_setup();
 	//WWDG_Refresh(&WWDG_Config); // Cargar antes de habilitar (como ya lo hacemos en WWDG_setup() no hace falta volver a hacerlo)
 	WWDG_cmd(ENABLE);
@@ -91,7 +90,7 @@ int main(void)
 		if(!GPIO_ReadPin(Button.pGPIOx, Button.GPIO_config.GPIO_Pin))
 			generate_fault();
 
-		min11max25(20);
+		min11max25(24);
 		WWDG_Refresh(&WWDG_Config);
 	}
 }
@@ -103,12 +102,17 @@ void min11max25(uint8_t val)
 
 void generate_fault(void)
 {
-	uint32_t *SRAM_address = (uint32_t *)0x20014000;
+	uint32_t *sram_address = (uint32_t *)0x20014000;
+	*sram_address = 0xFFFFFFFF;
 	void (*function_pointer)(void);
 
-	*SRAM_address = 0xFFFFFFFF;
-	function_pointer = (void *)SRAM_address;
+	function_pointer = (void *)sram_address;
 	function_pointer();
+}
+
+void HardFault_Handler(void)
+{
+	while(1);
 }
 
 void SYSCLK_PLL_setup(void)
@@ -146,11 +150,6 @@ void SYSCLK_PLL_setup(void)
 	// Seleccionar PLL_P como fuente de reloj del sistema
 	RCC_SYSCLKConfig(RCC_SYSCLK_Source_PLL_P);
 
-}
-
-void HardFault_Handler(void)
-{
-	while(1);
 }
 
 void assert_failed(uint8_t *file, uint32_t line){

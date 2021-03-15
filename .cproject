@@ -102,13 +102,13 @@
 							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec.2095635437" name="MCU Output Converter Motorola S-rec with symbols" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec.345490748"/>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.379098939.94196475" name="WWDG_1.c" rcbsApplicability="disable" resourcePath="Src/WWDG_1.c" toolsToInvoke="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1495887260.13743281">
-						<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1495887260.13743281" name="MCU GCC Compiler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1495887260"/>
+					<fileInfo id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.379098939.1303345304" name="IWDG_1.c" rcbsApplicability="disable" resourcePath="Src/IWDG_1.c" toolsToInvoke="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1495887260.1521676240">
+						<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1495887260.1521676240" name="MCU GCC Compiler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1495887260"/>
 					</fileInfo>
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Inc"/>
-						<entry excluding="IWDG_1.c|IWDG_01.c|TIM_02_basic_timer_IT.c|usart2.c|TIM_10_encoder.c|SYSTICK_03_elapsed_time.c|SYSTICK_02_delay.c|SYSTICK_01_measure.c|SYSTICK_delay.c|SYSTICK_time_elapsed.c|SYSTICK_measure.c|TIM_09_OC_PWM_measurement.c|TIM_08_OC_PWM_Servo.c|TIM_07_OC_PWM.c|TIM_06_OC_CCR_reload.c|TIM_05_OC_square_signals.c|TIM_04_OC_toggle_LED.c|TIM_03_IC_LSE.c|TIM_01_basic_timer.c|RCC_01_HSI_HSE_PLL_SYSCLK.c|GPIO1_rw.c|GPIO_02_INT.c|main.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Src"/>
+						<entry excluding="WWDG_1.c|IWDG_01.c|TIM_02_basic_timer_IT.c|usart2.c|TIM_10_encoder.c|SYSTICK_03_elapsed_time.c|SYSTICK_02_delay.c|SYSTICK_01_measure.c|SYSTICK_delay.c|SYSTICK_time_elapsed.c|SYSTICK_measure.c|TIM_09_OC_PWM_measurement.c|TIM_08_OC_PWM_Servo.c|TIM_07_OC_PWM.c|TIM_06_OC_CCR_reload.c|TIM_05_OC_square_signals.c|TIM_04_OC_toggle_LED.c|TIM_03_IC_LSE.c|TIM_01_basic_timer.c|RCC_01_HSI_HSE_PLL_SYSCLK.c|GPIO1_rw.c|GPIO_02_INT.c|main.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Src"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Startup"/>
 					</sourceEntries>
 				</configuration>
