@@ -44,6 +44,9 @@ void SYSCLK_HSE_setup(void)
 	// Esperar a que HSE este OK
 	RCC_WaitForCLKRDY(RCC_Clock_HSE);
 
+	// Activar el bit de bypass
+	RCC->CR |= (1 << RCC_CR_HSEBYP);
+
 	// Seleccionar HSE como fuente de reloj del sistema
 	RCC_SYSCLKConfig(RCC_SYSCLK_Source_HSE);
 }
